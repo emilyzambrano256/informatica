@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de IMC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 40px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      background-color: #0078d7;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #resultado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora de IMC</h1>
+  <form id="formIMC">
+    <label for="peso">Peso (kg):</label>
+    <input type="number" id="peso" name="peso" required step="0.1" min="1">
+
+    <label for="altura">Altura (m):</label>
+    <input type="number" id="altura" name="altura" required step="0.01" min="0.5">
+
+    <button type="submit">Calcular IMC</button>
+  </form>
+
+  <div id="resultado"></div>
+
+  <script>
+    document.getElementById("formIMC").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value);
+      const imc = peso / (altura * altura);
+
+      let interpretacion = "";
+
+      if (imc < 18.5) {
+        interpretacion = "Bajo peso";
+      } else if (imc >= 18.5 && imc < 25) {
+        interpretacion = "Peso normal";
+      } else if (imc >= 25 && imc < 30) {
+        interpretacion = "Sobrepeso";
+      } else {
+        interpretacion = "Obesidad";
+      }
+
+      document.getElementById("resultado").innerText =
+        `Tu IMC es: ${imc.toFixed(2)} (${interpretacion}).`;
+    });
+  </script>
+
+</body>
+</html>

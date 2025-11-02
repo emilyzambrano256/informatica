@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda de eventos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 40px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      background-color: #0078d7;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #resultado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Agenda de eventos</h1>
+  <form id="formularioEvento">
+    <label for="nombreEvento">Nombre del evento:</label>
+    <input type="text" id="nombreEvento" name="nombreEvento" required>
+
+    <label for="fechaEvento">Fecha del evento:</label>
+    <input type="date" id="fechaEvento" name="fechaEvento" required>
+
+    <button type="submit">Calcular</button>
+  </form>
+
+  <div id="resultado"></div>
+
+  <script>
+    document.getElementById("formularioEvento").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nombreEvento = document.getElementById("nombreEvento").value;
+      const fechaEvento = new Date(document.getElementById("fechaEvento").value);
+      const hoy = new Date();
+
+      // Borrar la hora para comparar solo fechas
+      hoy.setHours(0, 0, 0, 0);
+      fechaEvento.setHours(0, 0, 0, 0);
+
+      let resultadoTexto = "";
+      const diferenciaMs = fechaEvento - hoy;
+      const diasFaltantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+      if (diasFaltantes > 0) {
+        resultadoTexto =`Faltan ${diasFaltantes} días para el evento "${nombreEvento}".`;
+      } else if (diasFaltantes === 0) {
+        resultadoTexto = `¡El evento "${nombreEvento}" es hoy! 🎉`;
+      } else {
+        resultadoTexto =` El evento "${nombreEvento}" ya ocurrió.`;
+      }
+
+      document.getElementById("resultado").innerText = resultadoTexto;
+    });
+  </script>
+
+</body>
+</html>
